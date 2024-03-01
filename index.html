@@ -1,120 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dynamic Scroll Direction Effect</title>
-<style>
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Door to Another Room with Light Switch</title>
+    <style>
+        #lightSwitch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 80px;
+            background-color: #DDD;
+            border: 2px solid #666;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #switchLever {
+            width: 20px;
+            height: 40px;
+            background-color: white;
+            border: 2px double black;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .lightOn #switchLever {
+            transform: translateY(10px);
+        }
+
+        body.lightOn {
+            background-color:dimgrey;
+            color: white;
+        }
+
+        body {
+            transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: white;
+            color: black;
+        }
+
+        /* Optional: CSS for specific cursor states if needed */
+.cursor1 {
+  cursor: url('cursor1.cur'), auto;
 }
 
-#house {
-  width: 100px;
-  height: 100px;
-  background-color: #654321;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.cursor2 {
+  cursor: url('cursor2.cur'), auto;
 }
 
-.cloud {
-  width: 200px;
-  height: 100px;
-  background-color: #FFF;
-  border-radius: 50%;
-  position: fixed;
-}
-
-#cloud1 {
-  top: 10%;
-  left: 10%;
-}
-
-#cloud2 {
-  top: 20%;
-  left: 70%;
-}
-
-/* Example classes for different times of the day */
-.morning, .noon, .evening, .night {
-  transition: all 1s ease;
-}
-
-.morning {
-  background-color: #87CEFA; /* Light blue for morning */
-}
-
-.noon {
-  background-color: #87CEEB; /* Bright blue for noon */
-}
-
-.evening {
-  background-color: #FFD700; /* Golden for evening */
-}
-
-.night {
-  background-color: #191970; /* Dark blue for night */
-}
-
-</style>
+    </style>
 </head>
 <body>
+    <div id="house">
+        <div id="door" class="doorClosed">Door</div>
+        <div id="room" class="hidden">Another Room</div>
+        <div id="lightSwitch">
+            <div id="switchLever"></div>
+        </div>
+    </div>
 
-<div id="house"></div>
-<div class="cloud" id="cloud1"></div>
-<div class="cloud" id="cloud2"></div>
-
-<div style="height: 3000px;">Scroll down the page</div>
-
-<script>
-let lastScroll = 0;
-
-window.addEventListener('scroll', function() {
-  const currentScroll = window.scrollY;
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  let scrollPercentage = currentScroll / scrollHeight;
-
-  const house = document.getElementById("house");
-  const isScrollingDown = currentScroll > lastScroll;
-
-  if (isScrollingDown) {
-    // Scrolling down
-    if (scrollPercentage < 0.25) {
-      house.className = 'morning';
-      document.body.style.backgroundColor = "#87CEFA";
-    } else if (scrollPercentage < 0.5) {
-      house.className = 'noon';
-      document.body.style.backgroundColor = "#87CEEB";
-    } else if (scrollPercentage < 0.75) {
-      house.className = 'evening';
-      document.body.style.backgroundColor = "#FFD700";
-    } else {
-      house.className = 'night';
-      document.body.style.backgroundColor = "#191970";
-    }
-  } else {
-    // Scrolling up
-    if (scrollPercentage < 0.25) {
-      house.className = 'night'; // Example of reversing the cycle
-      document.body.style.backgroundColor = "#191970";
-    } else if (scrollPercentage < 0.5) {
-      house.className = 'evening';
-      document.body.style.backgroundColor = "#FFD700";
-    } else if (scrollPercentage < 0.75) {
-      house.className = 'noon';
-      document.body.style.backgroundColor = "#87CEEB";
-    } else {
-      house.className = 'morning';
-      document.body.style.backgroundColor = "#87CEFA";
-    }
-  }
-
-  lastScroll = currentScroll; // Update lastScroll position
-});
-</script>
+    <script>
+        document.getElementById('lightSwitch').addEventListener('click', function() {
+            var body = document.body;
+            if (body.classList.contains('lightOn')) {
+                body.classList.remove('lightOn');
+            } else {
+                body.classList.add('lightOn');
+            }
+        });
+    </script>
+   <script>
+    let step = false; // Toggle between true and false to switch cursors
+    
+    document.body.addEventListener('mousemove', () => {
+      if (step) {
+        document.body.style.cursor = "url('cursor1.cur'), auto";
+      } else {
+        document.body.style.cursor = "url('cursor2.cur'), auto";
+      }
+      step = !step; // Toggle the step state
+    });
+    </script>
+    
 </body>
 </html>
