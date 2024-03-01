@@ -56,36 +56,34 @@
     </style>
 </head>
 <body>
+    <audio id="switchOnSound" src="light.wav"></audio>
+    <audio id="switchOffSound" src="light.wav"></audio>
+    
     <div id="house">
         <div id="door" class="doorClosed">Door</div>
         <div id="room" class="hidden">Another Room</div>
         <div id="lightSwitch">
             <div id="switchLever"></div>
         </div>
-    </div>
 
-    <script>
-        document.getElementById('lightSwitch').addEventListener('click', function() {
-            var body = document.body;
-            if (body.classList.contains('lightOn')) {
-                body.classList.remove('lightOn');
-            } else {
-                body.classList.add('lightOn');
-            }
-        });
-    </script>
-   <script>
-    let step = false; // Toggle between true and false to switch cursors
-    
-    document.body.addEventListener('mousemove', () => {
-      if (step) {
-        document.body.style.cursor = "url('cursor1.cur'), auto";
-      } else {
-        document.body.style.cursor = "url('cursor2.cur'), auto";
-      }
-      step = !step; // Toggle the step state
-    });
-    </script>
+
+
+        <script>
+            document.getElementById('lightSwitch').addEventListener('click', function() {
+    var body = document.body; // Target the body for the class toggle
+    var switchOnSound = document.getElementById('switchOnSound'); // Get the on sound
+    var switchOffSound = document.getElementById('switchOffSound'); // Get the off sound
+
+    if (body.classList.contains('lightOn')) {
+        body.classList.remove('lightOn');
+        switchOffSound.play(); // Play the off sound
+    } else {
+        body.classList.add('lightOn');
+        switchOnSound.play(); // Play the on sound
+    }
+});
+
+        </script>
     
 </body>
 </html>
